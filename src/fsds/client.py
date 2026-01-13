@@ -12,15 +12,15 @@ from .types import (
     RefereeState,
 )
 
-import msgpackrpc
+from msgpackrpc import Client, Address
 
 
 class FSDSClient:
     def __init__(self, ip="", port=41451, timeout_value=3):
         if ip == "":
             ip = "127.0.0.1"
-        self.client = msgpackrpc.Client(
-            msgpackrpc.Address(ip, port),
+        self.client = Client(
+            Address(ip, port),
             timeout=timeout_value,
             pack_encoding="utf-8",
             unpack_encoding="utf-8",
