@@ -79,6 +79,30 @@ class FSDSClient:
             print("Ping to simulator FAIL")
             exit(1)
 
+    def simPause(self, is_paused: bool):
+        """
+        Pause or unpause the simulation.
+
+        Args:
+            is_paused (bool): True to pause, False to run.
+        """
+        self.client.call("simPause", is_paused)
+
+    def simIsPaused(self) -> bool:
+        """
+        Returns True if the simulation is paused.
+        """
+        return self.client.call("simIsPaused")
+
+    def simContinueForTime(self, seconds: float):
+        """
+        Continue the simulation for the specified number of seconds.
+
+        Args:
+            seconds (float): Duration in seconds to advance the sim.
+        """
+        self.client.call("simContinueForTime", seconds)
+
     # camera control
     # simGetImage returns compressed png in array of bytes
     # image_type uses one of the ImageType members
