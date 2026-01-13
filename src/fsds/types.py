@@ -125,14 +125,14 @@ class Vector3r(MsgpackMixin):
             + (self.z_val - other.z_val) ** 2
         ) ** 0.5
 
-    def to_Quaternionr(self):
-        return Quaternionr(self.x_val, self.y_val, self.z_val, 0)
+    def to_Quaternion(self):
+        return Quaternion(self.x_val, self.y_val, self.z_val, 0)
 
     def to_numpy_array(self):
         return np.array([self.x_val, self.y_val, self.z_val], dtype=np.float32)
 
 
-class Quaternionr(MsgpackMixin):
+class Quaternion(MsgpackMixin):
     w_val = 0.0
     x_val = 0.0
     y_val = 0.0
@@ -145,12 +145,12 @@ class Quaternionr(MsgpackMixin):
         self.w_val = w_val
 
     @staticmethod
-    def nanQuaternionr():
-        return Quaternionr(np.nan, np.nan, np.nan, np.nan)
+    def nanQuaternion():
+        return Quaternion(np.nan, np.nan, np.nan, np.nan)
 
     def __add__(self, other):
         if type(self) is type(other):
-            return Quaternionr(
+            return Quaternion(
                 self.x_val + other.x_val,
                 self.y_val + other.y_val,
                 self.z_val + other.z_val,
@@ -166,7 +166,7 @@ class Quaternionr(MsgpackMixin):
         if type(self) is type(other):
             t, x, y, z = self.w_val, self.x_val, self.y_val, self.z_val
             a, b, c, d = other.w_val, other.x_val, other.y_val, other.z_val
-            return Quaternionr(
+            return Quaternion(
                 w_val=a * t - b * x - c * y - d * z,
                 x_val=b * t + a * x + d * y - c * z,
                 y_val=c * t + a * y + b * z - d * x,
@@ -188,7 +188,7 @@ class Quaternionr(MsgpackMixin):
             + np.sctypes["uint"]
             + np.sctypes["float"]
         ):
-            return Quaternionr(
+            return Quaternion(
                 self.x_val / other,
                 self.y_val / other,
                 self.z_val / other,
@@ -237,7 +237,7 @@ class Quaternionr(MsgpackMixin):
             if other.get_length() == 1:
                 return other * self * other.inverse()
             else:
-                raise ValueError("length of the other Quaternionr must be 1")
+                raise ValueError("length of the other Quaternion must be 1")
         else:
             raise TypeError(
                 "unsupported operand type(s) for 'rotate': %s and %s"
@@ -245,7 +245,7 @@ class Quaternionr(MsgpackMixin):
             )
 
     def conjugate(self):
-        return Quaternionr(-self.x_val, -self.y_val, -self.z_val, self.w_val)
+        return Quaternion(-self.x_val, -self.y_val, -self.z_val, self.w_val)
 
     def star(self):
         return self.conjugate()
@@ -267,17 +267,17 @@ class Quaternionr(MsgpackMixin):
 
 class Pose(MsgpackMixin):
     position = Vector3r()
-    orientation = Quaternionr()
+    orientation = Quaternion()
 
     def __init__(self, position_val=None, orientation_val=None):
         position_val = position_val if position_val is not None else Vector3r()
-        orientation_val = orientation_val if orientation_val is not None else Quaternionr()
+        orientation_val = orientation_val if orientation_val is not None else Quaternion()
         self.position = position_val
         self.orientation = orientation_val
 
     @staticmethod
     def nanPose():
-        return Pose(Vector3r.nanVector3r(), Quaternionr.nanQuaternionr())
+        return Pose(Vector3r.nanVector3r(), Quaternion.nanQuaternion())
 
 
 class GeoPoint(MsgpackMixin):
@@ -303,7 +303,7 @@ class ImageResponse(MsgpackMixin):
     image_data_uint8 = np.uint8(0)
     image_data_float = 0.0
     camera_position = Vector3r()
-    camera_orientation = Quaternionr()
+    camera_orientation = Quaternion()
     time_stamp = np.uint64(0)
     message = ""
     pixels_as_float = 0.0
@@ -353,7 +353,7 @@ class CarControls(MsgpackMixin):
 
 class KinematicsState(MsgpackMixin):
     position = Vector3r()
-    orientation = Quaternionr()
+    orientation = Quaternion()
     linear_velocity = Vector3r()
     angular_velocity = Vector3r()
     linear_acceleration = Vector3r()
@@ -415,7 +415,7 @@ class LidarData(MsgpackMixin):
 
 class ImuData(MsgpackMixin):
     time_stamp = np.uint64(0)
-    orientation = Quaternionr()
+    orientation = Quaternion()
     angular_velocity = Vector3r()
     linear_acceleration = Vector3r()
 

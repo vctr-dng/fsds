@@ -5,7 +5,7 @@ import os
 import inspect
 import re
 
-from .types import Quaternionr
+from .types import Quaternion
 
 
 def string_to_uint8_array(bstr):
@@ -56,7 +56,7 @@ def write_file(filename, bstr):
 # https:#en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
 
 
-def to_eularian_angles(q):
+def to_euler_angles(q):
     z = q.z_val
     y = q.y_val
     x = q.x_val
@@ -92,7 +92,7 @@ def to_quaternion(pitch, roll, yaw):
     t4 = math.cos(pitch * 0.5)
     t5 = math.sin(pitch * 0.5)
 
-    q = Quaternionr()
+    q = Quaternion()
     q.w_val = t0 * t2 * t4 + t1 * t3 * t5  # w
     q.x_val = t0 * t3 * t4 - t1 * t2 * t5  # x
     q.y_val = t0 * t2 * t5 + t1 * t3 * t4  # y
