@@ -1,0 +1,21 @@
+[project]
+name = "fsds"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Formula Student Driverless Simulator Contributors" }
+]
+requires-python = ">=3.12"
+license = { text = "GPL-2.0-or-later" }
+
+dependencies = [
+  "msgpack-rpc-python @ git+https://github.com/vctr-dng/msgpack-rpc-python.git@fsds-python-pkg",
+  "backports.ssl_match_hostname", # required for msgpack-rpc-python
+  "numpy",
+  "opencv-contrib-python",
+]
+
+[build-system]
+requires = ["uv_build>=0.9.8,<0.10.0"]
+build-backend = "uv_build"
