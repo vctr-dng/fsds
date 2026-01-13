@@ -1,7 +1,16 @@
 from __future__ import print_function
 
-from .utils import *
-from .types import *
+from .types import (
+    CarControls,
+    CarState,
+    GpsData,
+    GroundSpeedSensorData,
+    ImageResponse,
+    ImuData,
+    KinematicsState,
+    LidarData,
+    RefereeState,
+)
 
 import msgpackrpc
 
@@ -184,7 +193,7 @@ class FSDSClient:
             self.client.call("getGroundSpeedSensorData", vehicle_name)
         )
 
-    def setCarControls(self, controls, vehicle_name="FSCar"):
+    def setCarControls(self, controls: CarControls, vehicle_name: str = "FSCar"):
         """
         Control the car using throttle, steering, brake, etc.
 

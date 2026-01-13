@@ -5,7 +5,7 @@ import os
 import inspect
 import re
 
-from .types import *
+from .types import Quaternionr
 
 
 def string_to_uint8_array(bstr):
