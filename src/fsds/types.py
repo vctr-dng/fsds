@@ -93,7 +93,7 @@ class Vector3r(MsgpackMixin):
             )
 
     def dot(self, other):
-        if type(self) == type(other):
+        if type(self) is type(other):
             return (
                 self.x_val * other.x_val
                 + self.y_val * other.y_val
@@ -106,7 +106,7 @@ class Vector3r(MsgpackMixin):
             )
 
     def cross(self, other):
-        if type(self) == type(other):
+        if type(self) is type(other):
             cross_product = np.cross(self.to_numpy_array(), other.to_numpy_array())
             return Vector3r(cross_product[0], cross_product[1], cross_product[2])
         else:
@@ -149,7 +149,7 @@ class Quaternionr(MsgpackMixin):
         return Quaternionr(np.nan, np.nan, np.nan, np.nan)
 
     def __add__(self, other):
-        if type(self) == type(other):
+        if type(self) is type(other):
             return Quaternionr(
                 self.x_val + other.x_val,
                 self.y_val + other.y_val,
@@ -163,7 +163,7 @@ class Quaternionr(MsgpackMixin):
             )
 
     def __mul__(self, other):
-        if type(self) == type(other):
+        if type(self) is type(other):
             t, x, y, z = self.w_val, self.x_val, self.y_val, self.z_val
             a, b, c, d = other.w_val, other.x_val, other.y_val, other.z_val
             return Quaternionr(
@@ -179,7 +179,7 @@ class Quaternionr(MsgpackMixin):
             )
 
     def __truediv__(self, other):
-        if type(other) == type(self):
+        if type(other) is type(self):
             return self * other.inverse()
         elif (
             type(other)
@@ -201,7 +201,7 @@ class Quaternionr(MsgpackMixin):
             )
 
     def dot(self, other):
-        if type(self) == type(other):
+        if type(self) is type(other):
             return (
                 self.x_val * other.x_val
                 + self.y_val * other.y_val
@@ -215,7 +215,7 @@ class Quaternionr(MsgpackMixin):
             )
 
     def cross(self, other):
-        if type(self) == type(other):
+        if type(self) is type(other):
             return (self * other - other * self) / 2
         else:
             raise TypeError(
@@ -224,7 +224,7 @@ class Quaternionr(MsgpackMixin):
             )
 
     def outer_product(self, other):
-        if type(self) == type(other):
+        if type(self) is type(other):
             return (self.inverse() * other - other.inverse() * self) / 2
         else:
             raise TypeError(
@@ -233,7 +233,7 @@ class Quaternionr(MsgpackMixin):
             )
 
     def rotate(self, other):
-        if type(self) == type(other):
+        if type(self) is type(other):
             if other.get_length() == 1:
                 return other * self * other.inverse()
             else:
@@ -270,8 +270,8 @@ class Pose(MsgpackMixin):
     orientation = Quaternionr()
 
     def __init__(self, position_val=None, orientation_val=None):
-        position_val = position_val if position_val != None else Vector3r()
-        orientation_val = orientation_val if orientation_val != None else Quaternionr()
+        position_val = position_val if position_val is not None else Vector3r()
+        orientation_val = orientation_val if orientation_val is not None else Quaternionr()
         self.position = position_val
         self.orientation = orientation_val
 
